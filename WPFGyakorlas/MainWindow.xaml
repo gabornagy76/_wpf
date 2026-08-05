@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WPFGyakorlas"
         mc:Ignorable="d"
         Title="Üdvözlő alkalmazás"  
-        Height="500"
+        Height="1000"
         Width="600"
         WindowStartupLocation="CenterScreen" SizeToContent="Height">
 
@@ -28,7 +28,17 @@
 
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            
+
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
 
@@ -37,6 +47,25 @@
             <RowDefinition Height="*"/>
 
         </Grid.RowDefinitions>
+
+        <!-- Gomb -->
+        <Button Grid.Row="19"
+                x:Name="udvozlesButton"
+                Content="Üdvözlés"
+                Width="130"
+                Height="40"
+                FontSize="16"
+                HorizontalAlignment="Left"
+                Click="udvozlesButton_Click"/>
+
+        <!-- Az eredmény az utolsó sorba. -->
+        <TextBlock Grid.Row="20"
+                   x:Name="eredmenyTextBlock"
+                   FontSize="20"
+                   FontWeight="Bold"
+                   Margin="0,25,0,0"
+                   TextWrapping="Wrap"/>
+
 
         <!-- 1. sor: -->
         <Label Grid.Row="0"
@@ -69,23 +98,6 @@
                  Padding="5"
                  Margin="0,0,0,15"/>
 
-        <!-- Gomb -->
-        <Button Grid.Row="12"
-                x:Name="udvozlesButton"
-                Content="Üdvözlés"
-                Width="130"
-                Height="40"
-                FontSize="16"
-                HorizontalAlignment="Left"
-                Click="udvozlesButton_Click"/>
-
-        <!-- Az eredmény az utolsó sorba. -->
-        <TextBlock Grid.Row="13"
-                   x:Name="eredmenyTextBlock"
-                   FontSize="20"
-                   FontWeight="Bold"
-                   Margin="0,25,0,0"
-                   TextWrapping="Wrap"/>
 
         <CheckBox Grid.Row="4"
                   x:Name="wpfCheckBox"
@@ -148,9 +160,6 @@
 
         </ComboBox>
 
-
-        <!-- Ez a Label a ListBoxhoz tartozik.
-        A Target segítségével összekapcsoljuk a Labelt a tantargyListBox vezérlővel. -->
         <Label Grid.Row="10"
                Content="_Kedvenc tantárgy:"
                Target="{Binding ElementName=tantargyListBox}"
@@ -158,11 +167,6 @@
                Padding="0"
                Margin="0,0,0,8"/>
 
-        <!--
-        A ListBox egyszerre több elemet jelenít meg.
-        A SelectionMode="Single" azt jelenti, hogy egyszerre csak egy tantárgy választható ki.
-        A SelectedIndex="0" miatt induláskor az első tantárgy lesz kijelölve.
-        -->
         <ListBox Grid.Row="11"
                  x:Name="tantargyListBox"
                  Height="115"
@@ -171,14 +175,103 @@
                  SelectedIndex="0"
                  Margin="0,0,0,15">
 
-            <!-- A lista választható elemei. -->
             <ListBoxItem Content="Matematika"/>
             <ListBoxItem Content="Fizika"/>
             <ListBoxItem Content="Digitális kultúra"/>
             <ListBoxItem Content="Történelem"/>
             <ListBoxItem Content="Magyar nyelv és irodalom"/>
-
         </ListBox>
 
+        <!--
+        A PasswordBox felirata.
+        A Target segítségével összekapcsoljuk a PasswordBoxszal.
+        -->
+        <Label Grid.Row="12"
+               Content="_Jelszó:"
+               Target="{Binding ElementName=jelszoPasswordBox}"
+               FontSize="18"
+               Padding="0"
+               Margin="0,0,0,8"/>
+
+        <!--
+        A PasswordBox jelszó bevitelére szolgál.
+        A beírt karaktereket nem jeleníti meg, hanem pontokkal helyettesíti.
+        Az x:Name segítségével C#-ból is elérhetjük.
+        -->
+        <PasswordBox Grid.Row="13"
+                     x:Name="jelszoPasswordBox"
+                     Height="35"
+                     FontSize="16"
+                     Padding="5"
+                     MaxLength="20"
+                     Margin="0,0,0,15"/>
+
+        <!-- A DatePicker felirata.
+        A Target segítségével összekapcsoljuk a DatePickerrel.
+        -->
+        <Label Grid.Row="14"
+               Content="_Születési dátum:"
+               Target="{Binding ElementName=szuletesiDatumPicker}"
+               FontSize="18"
+               Padding="0"
+               Margin="0,0,0,8"/>
+
+        <!-- A DatePicker segítségével egy dátumot választhatunk ki.
+        A felhasználó kézzel is beírhatja, vagy a naptárból is kiválaszthatja.
+        -->
+        <DatePicker Grid.Row="15"
+                    x:Name="szuletesiDatumPicker"
+                    Height="35"
+                    FontSize="16"
+                    Margin="0,0,0,15"
+                    SelectedDateFormat="Long"/>
+
+        <!-- A Slider felirata. -->
+        <Label Grid.Row="16"
+               Content="Tanulási kedv:"
+               Target="{Binding ElementName=kedvSlider}"
+               FontSize="18"
+               Padding="0"
+               Margin="0,0,0,8"/>
+
+        <!-- A Slider segítségével 0 és 100 közötti értéket választhatunk.
+        Az osztások 10-esével követik egymást. -->
+        <Slider Grid.Row="17"
+                x:Name="kedvSlider"
+                Minimum="0"
+                Maximum="100"
+                Value="50"
+                TickFrequency="10"
+                TickPlacement="BottomRight"
+                IsSnapToTickEnabled="True"
+                ValueChanged="kedvSlider_ValueChanged"
+                Margin="0,0,0,15"/>
+
+        <!-- Ez a ProgressBar a Slider aktuális értékét fogja megjeleníteni. -->
+        <ProgressBar Grid.Row="18"
+                     x:Name="kedvProgressBar"
+                     Height="25"
+                     Minimum="0"
+                     Maximum="100"
+                     Value="50"
+                     Margin="0,0,0,15"/>
+
+        <Image Grid.Row="19"
+               Width="200"
+               Height="60"
+               Source="https://picsum.photos/200/200"
+               Stretch="Uniform"
+               HorizontalAlignment="Right"
+               Opacity="0.8"
+               Margin="20,0,20,0"/>
+
+        <Grid.Background>
+
+            <ImageBrush
+                ImageSource="https://picsum.photos/600/1000"
+                Stretch="UniformToFill"
+                Opacity="0.3"/>
+
+        </Grid.Background>
     </Grid>
 </Window>
